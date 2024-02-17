@@ -91,3 +91,13 @@ export const isReservedUsername = async (key: string) => {
   }
   return reservedUsernames.includes(key);
 };
+
+export const isInvalidEmail = async (email: string) => {
+  let allowedEmails;
+  try {
+    allowedEmails = await get("allowedEmails");
+  } catch (e) {
+    allowedEmails = [];
+  }
+  return !allowedEmails.includes(email);
+};

@@ -1,4 +1,4 @@
-import { isBlacklistedEmail } from "@/lib/edge-config";
+import { isInvalidEmail } from "@/lib/edge-config";
 import jackson from "@/lib/jackson";
 import prisma from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -183,7 +183,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     signIn: async ({ user, account, profile }) => {
       console.log({ user, account, profile });
-      if (!user.email || (await isBlacklistedEmail(user.email))) {
+      if (!user.email || (await isInvalidEmail(user.email))) {
         return false;
       }
       if (account?.provider === "google") {
@@ -278,8 +278,8 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     jwt: async ({ token, account, user, trigger }) => {
-      // force log out banned users
-      if (!token.email || (await isBlacklistedEmail(token.email))) {
+      // force log out invalid users
+      if (!token.email || (await isInvalidEmail(token.email))) {
         return {};
       }
 
