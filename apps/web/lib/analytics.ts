@@ -134,7 +134,7 @@ export const getAnalytics = async ({
   }
 
   let url = new URL(
-    `https://api.us-east.tinybird.co/v0/pipes/${endpoint}.json`,
+    `https://api.tinybird.co/v0/pipes/${endpoint}.json`,
   );
   if (projectId) {
     url.searchParams.append("projectId", projectId);
